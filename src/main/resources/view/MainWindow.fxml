@@ -11,8 +11,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         minWidth="1040" minHeight="600" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -51,9 +56,41 @@
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                <tabs>
+                    <Tab fx:id="addressBookTab" text="Employees">
+                        <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    </Tab>
+                    <Tab fx:id="recruitmentTab" text="Recruitment">
+                        <StackPane fx:id="recruitmentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    </Tab>
+                </tabs>
+            </TabPane>
           </VBox>
-
+          <VBox fx:id="scheduleList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+            <padding>
+              <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+                <Accordion>
+                  <panes>
+                      <TitledPane animated="True" text= "Schedules">
+                          <content>
+                              <StackPane fx:id="scheduleListPanelPlaceholder" VBox.vgrow="ALWAYS" styleClass="background"/>
+                          </content>
+                      </TitledPane>
+                      <TitledPane animated="True" text="Expenses">
+                          <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Salary">
+                          <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                      </TitledPane>
+                  </panes>
+              </Accordion>
+          </VBox>
           <StackPane fx:id="browserPlaceholder" prefWidth="340" >
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
