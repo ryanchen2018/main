@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -10,6 +12,8 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.EmployeeIdScheduleContainsKeywordsPredicate;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.
@@ -31,6 +35,7 @@ public class DeleteCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
@@ -43,6 +48,11 @@ public class DeleteCommand extends Command {
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
         model.commitAddressBook();
+
+        deleteAllSchedulesFromPerson(model, personToDelete);
+        model.commitScheduleList();
+        model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 
@@ -51,5 +61,25 @@ public class DeleteCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+    }
+
+
+    /**
+     *  Deletes all schedules related to person
+     */
+    public void deleteAllSchedulesFromPerson (Model model, Person personToDelete) {
+        EmployeeIdScheduleContainsKeywordsPredicate predicatEmployeeId;
+        List<String> employeeIdList = new ArrayList<>();
+        List<Schedule> lastShownListSchedule;
+
+        employeeIdList.add(personToDelete.getEmployeeId().value);
+        predicatEmployeeId = new EmployeeIdScheduleContainsKeywordsPredicate(employeeIdList);
+        model.updateFilteredScheduleList(predicatEmployeeId);
+        lastShownListSchedule = model.getFilteredScheduleList();
+
+        while (lastShownListSchedule.size() != 0) {
+            Schedule scheduleToDelete = lastShownListSchedule.get(0);
+            model.deleteSchedule(scheduleToDelete);
+        }
     }
 }

@@ -19,7 +19,7 @@ import seedu.address.model.schedule.ScheduleList;
 @XmlRootElement(name = "schedulelist")
 public class XmlSerializableScheduleList {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedules list contains duplicate schedule(s).";
 
     @XmlElement
     private List<XmlAdaptedSchedule> schedules;
@@ -51,7 +51,7 @@ public class XmlSerializableScheduleList {
         for (XmlAdaptedSchedule p : schedules) {
             Schedule schedule = p.toModelType();
             if (scheduleList.hasSchedule(schedule)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_SCHEDULE);
             }
             scheduleList.addSchedule(schedule);
         }

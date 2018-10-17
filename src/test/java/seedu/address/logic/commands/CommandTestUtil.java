@@ -33,6 +33,7 @@ public class CommandTestUtil {
 
     public static final String VALID_EMPLOYEEID_AMY = "000001";
     public static final String VALID_EMPLOYEEID_BOB = "000001";
+    public static final String VALID_EMPLOYEEID_CARL = "000002";
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Choo";
     public static final String VALID_DATEOFBIRTH_AMY = "12/12/1995";
@@ -51,6 +52,12 @@ public class CommandTestUtil {
     public static final String VALID_SALARY_BOB = "1000.00";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+
+    //schedule test fields
+    public static final String VALID_DATE_AMY = "12/12/2018";
+    public static final String VALID_DATE_BOB = "12/12/2019";
+    public static final String VALID_TYPE_AMY = "WORK";
+    public static final String VALID_TYPE_BOB = "LEAVE";
 
     public static final String EMPLOYEEID_DESC_AMY = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_AMY;
     public static final String EMPLOYEEID_DESC_BOB = " " + PREFIX_EMPLOYEEID + VALID_EMPLOYEEID_BOB;

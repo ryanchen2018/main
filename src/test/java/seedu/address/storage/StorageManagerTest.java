@@ -15,12 +15,16 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ScheduleListChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.addressbook.ReadOnlyAddressBook;
+import seedu.address.model.expenses.ReadOnlyExpensesList;
 import seedu.address.model.schedule.ReadOnlyScheduleList;
+import seedu.address.model.schedule.ScheduleList;
 import seedu.address.storage.addressbook.XmlAddressBookStorage;
+import seedu.address.storage.expenses.XmlExpensesListStorage;
 import seedu.address.storage.schedule.XmlScheduleListStorage;
 import seedu.address.storage.userpref.JsonUserPrefsStorage;
 import seedu.address.ui.testutil.EventsCollectorRule;
@@ -37,9 +41,11 @@ public class StorageManagerTest {
     @Before
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
+        XmlExpensesListStorage expensesListStorage = new XmlExpensesListStorage(getTempFilePath("el"));
         XmlScheduleListStorage scheduleListStorage = new XmlScheduleListStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, scheduleListStorage, userPrefsStorage);
+        storageManager = new StorageManager(addressBookStorage, expensesListStorage, scheduleListStorage,
+                userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -83,12 +89,23 @@ public class StorageManagerTest {
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")), (
+                new XmlExpensesListStorageExceptionThrowingStub(Paths.get("dummy"))), (
             new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))),
             new JsonUserPrefsStorage(Paths.get("dummy")));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    @Test
+    public void handleScheduleListChangedEvent_exceptionThrown_eventRaised() {
+        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub(Paths.get("dummy")), (
+                new XmlExpensesListStorageExceptionThrowingStub(Paths.get("dummy"))), (
+                new XmlScheduleListStorageExceptionThrowingStub(Paths.get("dummy"))),
+                new JsonUserPrefsStorage(Paths.get("dummy")));
+        storage.handleScheduleListChangedEvent(new ScheduleListChangedEvent(new ScheduleList()));
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
 
     /**
      * A Stub class to throw an exception when the save method is called
@@ -105,6 +122,20 @@ public class StorageManagerTest {
         }
     }
 
+    /**
+     * A Stub class to throw an exception when the save method is called
+     */
+    class XmlExpensesListStorageExceptionThrowingStub extends XmlExpensesListStorage {
+
+        public XmlExpensesListStorageExceptionThrowingStub(Path filePath) {
+            super(filePath);
+        }
+
+        @Override
+        public void saveExpensesList(ReadOnlyExpensesList expensesList, Path filePath) throws IOException {
+            throw new IOException("dummy exception");
+        }
+    }
 
     /**
      * A Stub class to throw an exception when the save method is called

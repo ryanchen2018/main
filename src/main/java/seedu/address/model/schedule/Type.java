@@ -1,5 +1,7 @@
 package seedu.address.model.schedule;
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
 /**
  * Represents a Person's remark in the address book.
  * Guarantees: immutable; is always valid
@@ -7,19 +9,19 @@ import static java.util.Objects.requireNonNull;
 public class Type {
 
     public static final String MESSAGE_TYPE_CONSTRAINTS =
-            "TYPE should only contain alphanumeric characters and spaces, and it should not be blank";
+            "TYPE should only be WORK or LEAVE, case not sensitive and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * Type must either be WORK or LEAVE, exact match.
      */
-    public static final String TYPE_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String TYPE_VALIDATION_REGEX = "(^LEAVE$)|(^WORK$)";
 
 
     public final String value;
-    public Type(String remark) {
-        requireNonNull(remark);
-        value = remark;
+    public Type(String type) {
+        requireNonNull(type);
+        checkArgument(isValidType(type.toUpperCase()), MESSAGE_TYPE_CONSTRAINTS);
+        value = type.toUpperCase();
     }
     @Override
     public String toString() {
@@ -30,7 +32,7 @@ public class Type {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidType(String test) {
-        return test.matches(TYPE_VALIDATION_REGEX);
+        return test.toUpperCase().matches(TYPE_VALIDATION_REGEX);
     }
 
     @Override

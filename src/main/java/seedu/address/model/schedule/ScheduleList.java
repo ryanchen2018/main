@@ -28,7 +28,7 @@ public class ScheduleList implements ReadOnlyScheduleList {
     public ScheduleList() {}
 
     /**
-     * Creates an AddressBook using the Persons in the {@code toBeCopied}
+     * Creates an AddressBook using the Schedules in the {@code toBeCopied}
      */
     public ScheduleList(ReadOnlyScheduleList toBeCopied) {
         this();
@@ -54,10 +54,10 @@ public class ScheduleList implements ReadOnlyScheduleList {
         setSchedules(newData.getScheduleList());
     }
 
-    //// person-level operations
+    //// schedule-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a schedule with the same identity as {@code person} exists in the address book.
      */
     public boolean hasSchedule(Schedule schedule) {
         requireNonNull(schedule);
@@ -65,7 +65,7 @@ public class ScheduleList implements ReadOnlyScheduleList {
     }
 
     /**
-     * Adds a person to the address book.
+     * Adds a schedule to the address book.
      * The person must not already exist in the address book.
      */
     public void addSchedule(Schedule schedule) {
@@ -80,14 +80,14 @@ public class ScheduleList implements ReadOnlyScheduleList {
     public void updateSchedule(Schedule schedule, Schedule editedSchedule) {
         requireNonNull(editedSchedule);
 
-        schedules.setPerson(schedule, editedSchedule);
+        schedules.setSchedule(schedule, editedSchedule);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
      */
-    public void removePerson(Schedule key) {
+    public void removeSchedule(Schedule key) {
         schedules.remove(key);
     }
 

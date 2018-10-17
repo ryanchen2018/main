@@ -13,7 +13,7 @@ import seedu.address.model.schedule.ScheduleList;
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Address book and Schedule list has been cleared!";
 
 
     @Override
@@ -22,6 +22,7 @@ public class ClearCommand extends Command {
         model.resetAddressBookData(new AddressBook());
         model.resetScheduleListData(new ScheduleList());
         model.commitAddressBook();
+        model.commitScheduleList();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

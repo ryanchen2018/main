@@ -8,8 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -27,7 +27,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     private final ObservableList<Schedule> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent schedule as the given argument.
      */
     public boolean contains(Schedule toCheck) {
         requireNonNull(toCheck);
@@ -41,7 +41,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     public void add(Schedule toAddSchedule) {
         requireNonNull(toAddSchedule);
         if (contains(toAddSchedule)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateScheduleException();
         }
         internalList.add(toAddSchedule);
     }
@@ -51,16 +51,16 @@ public class UniqueScheduleList implements Iterable<Schedule> {
      * {@code target} must exist in the list.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the list.
      */
-    public void setPerson(Schedule target, Schedule editedSchedule) {
+    public void setSchedule(Schedule target, Schedule editedSchedule) {
         requireAllNonNull(target, editedSchedule);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new PersonNotFoundException();
+            throw new ScheduleNotFoundException();
         }
 
         if (!target.isSameSchedule(editedSchedule) && contains(editedSchedule)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateScheduleException();
         }
 
         internalList.set(index, editedSchedule);
@@ -73,7 +73,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     public void remove(Schedule toRemove) {
         requireNonNull(toRemove);
         if (!internalList.remove(toRemove)) {
-            throw new PersonNotFoundException();
+            throw new ScheduleNotFoundException();
         }
     }
 
@@ -89,7 +89,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     public void setSchedules(List<Schedule> schedules) {
         requireAllNonNull(schedules);
         if (!personsAreUnique(schedules)) {
-            throw new DuplicatePersonException();
+            throw new DuplicateScheduleException();
         }
 
         internalList.setAll(schedules);

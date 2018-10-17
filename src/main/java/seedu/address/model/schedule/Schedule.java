@@ -7,7 +7,7 @@ import java.util.Objects;
 import seedu.address.model.person.EmployeeId;
 
 /**
- * Represents a Person's remark in the address book.
+ * Represents a schedule list in the address book.
  * Guarantees: immutable; is always valid
  */
 public class Schedule {
@@ -17,8 +17,8 @@ public class Schedule {
     private final Type type;
     private final Date date;
 
-    public Schedule(EmployeeId id, Type type, Date date) {
-        requireAllNonNull(type, date);
+    public Schedule (EmployeeId id, Type type, Date date) {
+        requireAllNonNull(id, type, date);
         this.type = type;
         this.date = date;
         this.id = id;
@@ -28,16 +28,16 @@ public class Schedule {
         return type;
     }
 
-    public Date getDate() {
+    public Date getScheduleDate() {
         return date;
     }
 
-    public EmployeeId getId() {
+    public EmployeeId getEmployeeId() {
         return id;
     }
 
     /**
-     * Returns true if both persons have the same identity and data fields.
+     * Returns true if both schedules have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
     @Override
@@ -51,7 +51,7 @@ public class Schedule {
         }
 
         Schedule otherPerson = (Schedule) other;
-        return otherPerson.getDate().equals(getDate())
+        return otherPerson.getScheduleDate().equals(getScheduleDate())
                 && otherPerson.getType().equals(getType());
     }
 
@@ -71,16 +71,16 @@ public class Schedule {
         }
 
         return otherSchedule != null
-                && otherSchedule.getId().equals(getId())
+                && otherSchedule.getEmployeeId().equals(getEmployeeId())
                 && (otherSchedule.getType().equals(getType())
-                && otherSchedule.getDate().equals(getDate()));
+                && otherSchedule.getScheduleDate().equals(getScheduleDate()));
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Date: ")
-                .append(getDate())
+                .append(getScheduleDate())
                 .append(" Type: ")
                 .append(getType());
         return builder.toString();

@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.person.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * Represents a Person in the address book.
@@ -48,6 +49,22 @@ public class Person {
         this.salary = salary;
         this.bonus = bonus;
         this.tags.addAll(tags);
+    }
+
+    public Person(EmployeeId employeeId) {
+        SampleDataUtil sample = new SampleDataUtil();
+        requireAllNonNull(employeeId);
+        this.employeeId = employeeId;
+        this.name = new Name(sample.SAMPLE_NAME.toString());
+        this.dateOfBirth = new DateOfBirth(sample.SAMPLE_DATEOFBIRTH.toString());
+        this.phone = new Phone(sample.SAMPLE_PHONE.toString());
+        this.email = new Email(sample.SAMPLE_EMAIL.toString());
+        this.department = new Department(sample.SAMPLE_DEPARTMENT.toString());
+        this.position = new Position(sample.SAMPLE_POSITION.toString());
+        this.address = new Address(sample.SAMPLE_ADDRESS.toString());
+        this.salary = new Salary(sample.SAMPLE_SALARY.toString());
+        this.bonus = new Bonus(sample.SAMPLE_BONUS.toString());
+        this.tags.addAll(new HashSet<>());
     }
 
     public EmployeeId getEmployeeId() {
@@ -110,6 +127,18 @@ public class Person {
         return otherPerson != null
                 && otherPerson.getName().equals(getName())
                 && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));
+    }
+
+    /**
+     * Returns true if both persons of the same employee id.
+     */
+    public boolean isSameEmployeeId(Person person) {
+        if (person.getEmployeeId() == this.getEmployeeId()) {
+            return true;
+        }
+
+        return person.getEmployeeId() != null
+                && person.getEmployeeId().equals(getEmployeeId());
     }
 
     /**
