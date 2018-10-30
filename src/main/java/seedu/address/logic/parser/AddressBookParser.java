@@ -31,6 +31,7 @@ import seedu.address.logic.commands.ModifyPayCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveExpensesCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectRecruitmentPostCommand;
 import seedu.address.logic.commands.SelectScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
