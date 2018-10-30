@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EXPENSES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SCHEDULES;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_RECRUITMENT;
 
 import java.util.Set;
 
@@ -54,6 +55,13 @@ public class RedoCommand extends Command {
                     model.updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
                 }
                 break;
+
+             case RECRUITMENT_LIST:
+                 if (model.canRedoRecruitmentList()) {
+                     model.redoRecruitmentList();
+                     model.updateFilteredRecruitmentList(PREDICATE_SHOW_ALL_RECRUITMENT);
+                    }
+                    break;
 
             default:
                 break;

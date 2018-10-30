@@ -11,6 +11,7 @@ import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.expenses.ExpensesList;
 import seedu.address.model.schedule.ScheduleList;
+import seedu.address.model.recruitment.RecruitmentList;
 
 /**
  * Clears all the storages.
@@ -33,6 +34,12 @@ public class ClearCommand extends Command {
         if (model.getFilteredExpensesList().size() > 0) {
             model.resetDataExpenses(new ExpensesList());
             set.add(ModelTypes.EXPENSES_LIST);
+        }
+
+        model.updateFilteredRecruitmentList(model.PREDICATE_SHOW_ALL_RECRUITMENT);
+        if (model.getFilteredRecruitmentList().size() > 0) {
+            model.resetRecruitmentListData(new RecruitmentList());
+            set.add(ModelTypes.RECRUITMENT_LIST);
         }
 
         model.updateFilteredScheduleList(model.PREDICATE_SHOW_ALL_SCHEDULES);
