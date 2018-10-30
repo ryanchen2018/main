@@ -10,8 +10,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelTypes;
 import seedu.address.model.addressbook.AddressBook;
 import seedu.address.model.expenses.ExpensesList;
-import seedu.address.model.schedule.ScheduleList;
 import seedu.address.model.recruitment.RecruitmentList;
+import seedu.address.model.schedule.ScheduleList;
 
 /**
  * Clears all the storages.
